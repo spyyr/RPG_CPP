@@ -1,10 +1,10 @@
 #include <Windows.h>
-//#include "Human.h"
 #include "Player.h"
 #include "Monster.h"
 #include "IItem.h"
 #include <array>
 #include "MyRandom.h"
+#include "ScreenPrint.h"
 
 void FightTest(Human& player, Monster& enemy)
 {
@@ -12,10 +12,8 @@ void FightTest(Human& player, Monster& enemy)
 	Sleep(500);
 	bool PlayerTurn = 1;
 	while (player.getIsDead() == false && enemy.getIsDead() == false)
-	{		
-		SetConsoleTextAttribute(hConsole, 3);
-		std::cout << "Fight " << player.GetName() << " vs " << enemy.GetName() << '\n';
-		SetConsoleTextAttribute(hConsole, 15);
+	{				
+		ScreenPrint::Print("Fight " + player.GetName() + " vs " + enemy.GetName(), 3, 1, 1, 1);		
 		SetConsoleTextAttribute(hConsole, 2);
 		player.AttackSomeone(enemy, player.GetEqAddAttack());		
 		if (enemy.getIsDead())
@@ -99,7 +97,7 @@ int main()
 	playerPtr->Equip(MyWeapon);
 	playerPtr->GetHandsEquipment(0)->PrintItemProps();
 
-	FightArena(*playerPtr);
+	FightArena(*playerPtr);	
 
 	delete MyWeapon;
 	delete playerPtr;	

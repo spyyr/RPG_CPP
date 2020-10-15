@@ -136,5 +136,5 @@ int Human::GetEqAddCritChance()
 
 double Human::GetWholeAttackValue()
 {
-	
+	return 0;
 }

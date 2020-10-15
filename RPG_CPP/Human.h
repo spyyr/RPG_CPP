@@ -2,7 +2,7 @@
 #include "Character.h"
 #include <map>
 #include <array>
-#include "IWeapon.h"
+#include "Weapon.h"
 class Human : public Character
 {
 protected: int MP;
@@ -10,6 +10,7 @@ protected: int MaxMP;
 protected: int Exp;
 protected: int LvlExpBound;
 protected: int EqAddAttack;
+protected: int EqAddCritChance;
 protected: unsigned int Gold;
 protected: static const std::map<int, int> LevelingExpScheme;
 protected: std::array<IItem*, 2> HandsEq = {};
@@ -27,5 +28,7 @@ public: void Equip(IItem* itemToEquip);
 protected: int CalculateEqAttack();
 public: IItem* GetHandsEquipment(short index);
 public: int GetEqAddAttack();
+public: int GetEqAddCritChance();
+public: double GetWholeAttackValue() override;
 };
 

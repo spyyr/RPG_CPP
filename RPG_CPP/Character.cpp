@@ -19,19 +19,19 @@ Character::Character(std::string _name, int _hp, int _lvl, int _attack, double _
 
 void Character::AttackSomeone(Character& enemy) //attack should be done in another method, best in class game
 {		
-	int attackValue;
+	/*int attackValue;
 	attackValue = this->Attack;
 	std::cout << this->Name << " attacks " << enemy.GetName() << " for " << attackValue << '\n';
 	std::cout << "Damage Dealt to " << enemy.Name << ": " << this->Attack * (100 - enemy.Defense) * 0.01 << '\n';
 	enemy.HP -= attackValue * (100-enemy.Defense)*0.01;
-	enemy.CheckCondition();
+	enemy.CheckCondition();*/
+	Character::AttackSomeone(enemy, 0);
 }
 
 void Character::AttackSomeone(Character& enemy, int damage)
 {
-	int attackValue = this->Attack + damage;
-	int tmp = (MyRandom::GenerateRandomNumbers(1, 0, 100))->at(0);
-	if (this->CritChance >= tmp)
+	int attackValue = this->Attack + damage;	
+	if (this->CheckIfCritical())
 	{
 		attackValue *= 2;
 		std::cout << "Critical attack! Damage x2" << '\n';
@@ -60,4 +60,22 @@ void Character::Heal(int heal_value)
 		this->HP += heal_value;
 }
 int Character::GetMaxHP() { return this->MaxHP; }
+
+bool Character::CheckIfCritical()
+{
+	int tmp = MyRandom::GenerateRandomNumber(0, 100);
+	if (this->CritChance >= tmp)
+		return true;	
+	else
+		return false;
+}
+
+double Character::GetWholeAttackValue()
+{
+	int returnAttackValue = this->Attack;
+	if (this->CheckIfCritical())
+		returnAttackValue *= 2;
+
+	return returnAttackValue;
+}
 	  

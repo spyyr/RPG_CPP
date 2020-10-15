@@ -27,7 +27,7 @@ void Monster::PrintCharacterProps()
 
 void Monster::Dead() 
 {
-	system("cls");
+	//system("cls");
 	std::cout << this->Name << " is dead!. You got " << this->ExpYield << " exp points " <<
 		" and " << this->GoldYield << " Gold points!'\n'";
 	this->IsDead = true;

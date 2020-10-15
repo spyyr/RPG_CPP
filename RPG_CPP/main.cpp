@@ -45,7 +45,7 @@ void FightTest(Human& player, Monster& enemy)
 		system("cls");
 	} 
 	SetConsoleTextAttribute(hConsole, 15);
-	system("cls");
+	//system("cls");
 	if (player.getIsDead() == false)
 	{
 		player.GotExp(enemy.GetExpYield());
@@ -62,7 +62,7 @@ void FightArena(Human& humanRef)
 		new Monster("Dog", 30, 2, 4, 2.0, 3.0, 10),
 		new Monster("Wolf", 40, 3, 7, 3.0, 5.0, 15) };
 
-	IWeapon* LvlWeapon = new IWeapon("Mighty Sword", 55, 7);
+	Weapon* LvlWeapon = new Weapon("Mighty Sword", 55, 7, 1.0);
 	
 	bool sw = false;
 	Monster* monsterPtr = new Monster(*monsterArray[0]);
@@ -89,12 +89,13 @@ void FightArena(Human& humanRef)
 		delete item;
 	}
 	delete monsterPtr;
+	delete LvlWeapon;
 }
 
 int main()
 {
-	Player* playerPtr = new Player("Janek", 55, 20, 2, 3, 100.0, 30, 150);	
-	IWeapon* MyWeapon = new IWeapon("Bloodthirster", 35, 4);	
+	Player* playerPtr = new Player("Janek", 55, 20, 2, 3, 20.0, 30, 150);	
+	Weapon* MyWeapon = new Weapon("Bloodthirster", 35, 4, 0.5);	
 	playerPtr->Equip(MyWeapon);
 	playerPtr->GetHandsEquipment(0)->PrintItemProps();
 

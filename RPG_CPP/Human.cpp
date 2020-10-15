@@ -43,7 +43,7 @@ void Human::PrintCharacterProps()
 		"MP: " << this->MP << '/' << this->MaxMP << '\n' <<
 		"Attack: " << this->Attack << " + (" << this->EqAddAttack << ")" << '\n' <<
 		"Defense: " << this->Defense << '\n' <<
-		"Crit chance: " << this->CritChance << '%' << '\n' <<
+		"Crit chance: " << this->CritChance << '%' << '+' << this->EqAddCritChance << '%' << '\n' <<
 		"Lvl: " << this->Lvl << '\n' <<
 		"Exp: " << this->Exp << '/' << this->LvlExpBound << '\n' <<
 		"Gold: " << this->Gold << '\n' << '\n';
@@ -100,8 +100,11 @@ int Human::GetLevel()
 void Human::Equip(IItem* itemToEquip)
 {
 	std::string EqType = typeid(*itemToEquip).name();	
-	if (EqType == "class IWeapon")
-		this->EqAddAttack = static_cast<IWeapon*>(itemToEquip)->GetAttack(); //operator should be +=, later write method uneqip which should decrease EqAddAttack value
+	if (EqType == "class Weapon")
+	{
+		this->EqAddAttack = static_cast<Weapon*>(itemToEquip)->GetAttack(); //operator should be +=, later write method uneqip which should decrease EqAddAttack value
+		this->EqAddCritChance = static_cast<Weapon*>(itemToEquip)->GetAdditionalCritChance();
+	}
 	
 	this->HandsEq[0] = itemToEquip;
 }
@@ -124,4 +127,14 @@ IItem* Human::GetHandsEquipment(short index)
 int Human::GetEqAddAttack()
 {
 	return this->EqAddAttack;
+}
+
+int Human::GetEqAddCritChance()
+{
+	return this->EqAddCritChance;
+}
+
+double Human::GetWholeAttackValue()
+{
+	
 }

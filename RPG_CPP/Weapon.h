@@ -1,12 +1,14 @@
 #pragma once
 #include "IItem.h"
-class IWeapon :
+class Weapon :
     public IItem
 {
 protected: double Attack;
+protected: double AdditionalCritChance;
 //protected: ? SpecialPower; //special power of weapon which is used in calculating dmg dealt to enemy in attach method. So far type not found
-public: IWeapon(std::string itemName, int itemPrice, double AttackValue);
+public: Weapon(std::string itemName, int itemPrice, double AttackValue, double _additionalCritChance);
 public: void PrintItemProps() override;
 public: double GetAttack();
+public: double GetAdditionalCritChance();
 };
 

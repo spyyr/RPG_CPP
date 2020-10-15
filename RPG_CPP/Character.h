@@ -28,5 +28,7 @@ public: bool getIsDead();
 public: std::string GetName();
 public: void Heal(int heal_value);
 public: int GetMaxHP();
+public: virtual double GetWholeAttackValue();
+protected: bool CheckIfCritical(); //should be in another class
 };
 

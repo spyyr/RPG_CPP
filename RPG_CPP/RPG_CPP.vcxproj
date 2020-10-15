@@ -143,7 +143,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="IItem.cpp" />
-    <ClCompile Include="IWeapon.cpp" />
+    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MyRandom.cpp" />
@@ -154,7 +154,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="IItem.h" />
-    <ClInclude Include="IWeapon.h" />
+    <ClInclude Include="Weapon.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MyRandom.h" />
     <ClInclude Include="Player.h" />

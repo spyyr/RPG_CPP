@@ -105,8 +105,8 @@ void Human::Equip(IItem* itemToEquip)
 		this->EqAddAttack = static_cast<Weapon*>(itemToEquip)->GetAttack(); //operator should be +=, later write method uneqip which should decrease EqAddAttack value
 		this->EqAddCritChance = static_cast<Weapon*>(itemToEquip)->GetAdditionalCritChance();
 	}
-	
-	this->HandsEq[0] = itemToEquip;
+	Weapon* weaponPtr = static_cast<Weapon*>(itemToEquip);
+	this->HandsEq[0] = new Weapon(*weaponPtr);
 }
 
 int Human::CalculateEqAttack()

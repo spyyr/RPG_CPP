@@ -35,3 +35,8 @@ void ScreenPrint::ChangeTextColor(short colorNumber)
 {
 	SetConsoleTextAttribute(ScreenPrint::hConsole, colorNumber);
 }
+
+const HANDLE& ScreenPrint::GethConsole()
+{
+	return ScreenPrint::hConsole;
+}

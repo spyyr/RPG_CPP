@@ -4,6 +4,7 @@
 #include "Monster.h"
 #include "IItem.h"
 #include <array>
+#include "MyRandom.h"
 
 void FightTest(Human& player, Monster& enemy)
 {
@@ -48,6 +49,7 @@ void FightTest(Human& player, Monster& enemy)
 	if (player.getIsDead() == false)
 	{
 		player.GotExp(enemy.GetExpYield());
+		player.GotGold(enemy.GetGoldYield());
 		player.CheckCondition();
 	}
 }
@@ -55,10 +57,14 @@ void FightTest(Human& player, Monster& enemy)
 void FightArena(Human& humanRef)
 {	
 	int afterFightHealValue = 0;
-	std::array<Monster *, 3> monsterArray{ new Monster("Mouse", 20, 1, 2, 1.0, 5),
-		new Monster("Dog", 30, 2, 4, 2.0, 10),
-		new Monster("Wolf", 40, 3, 7, 3.0, 15) };
+	std::array<Monster *, 3> monsterArray{ 
+		new Monster("Mouse", 20, 1, 2, 1.0, 1.0, 5),
+		new Monster("Dog", 30, 2, 4, 2.0, 3.0, 10),
+		new Monster("Wolf", 40, 3, 7, 3.0, 5.0, 15) };
+
+	IWeapon* LvlWeapon = new IWeapon("Mighty Sword", 55, 7);
 	
+	bool sw = false;
 	Monster* monsterPtr = new Monster(*monsterArray[0]);
 	for (Monster* item : monsterArray)
 	{
@@ -71,6 +77,10 @@ void FightArena(Human& humanRef)
 			afterFightHealValue = floor(monsterPtr->GetMaxHP() * 0.1);
 			std::cout << "You will be healed for " << afterFightHealValue << '\n';
 			humanRef.Heal(afterFightHealValue);
+			if (humanRef.GetLevel() == 3 && sw == false)
+			{
+				humanRef.Equip(LvlWeapon);
+			}				
 			humanRef.PrintCharacterProps();
 		}
 	}
@@ -83,7 +93,7 @@ void FightArena(Human& humanRef)
 
 int main()
 {
-	Player* playerPtr = new Player("Janek", 55, 20, 4, 3, 100, 150);	
+	Player* playerPtr = new Player("Janek", 55, 20, 2, 3, 100.0, 30, 150);	
 	IWeapon* MyWeapon = new IWeapon("Bloodthirster", 35, 4);	
 	playerPtr->Equip(MyWeapon);
 	playerPtr->GetHandsEquipment(0)->PrintItemProps();

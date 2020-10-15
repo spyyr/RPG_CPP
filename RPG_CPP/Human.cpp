@@ -9,7 +9,7 @@ const std::map<int, int> Human::LevelingExpScheme = {
 	{6, 1000}
 };
 
-Human::Human(std::string _name, int _hp, int _mp, int _lvl, double _defense) :Character(_name, _hp, 1, 7, _defense)
+Human::Human(std::string _name, int _hp, int _mp, int _lvl, double _defense, double _critChance):Character(_name, _hp, 1, 7, _defense, _critChance)
 {	
 	this->MP = _mp;	
 	this->MaxMP = _mp;
@@ -29,10 +29,11 @@ Human::Human(std::string _name, int _hp, int _mp, int _lvl, double _defense) :Ch
 	this->Exp = 0;
 }
 
-Human::Human(std::string _name, int _hp, int _mp, int _lvl, double _defense, int _exp, int _gold):Human(_name, _hp, _mp, _lvl, _defense)
+Human::Human(std::string _name, int _hp, int _mp, int _lvl, double _defense, double _critChance, int _exp, int _gold):Human(_name, _hp, _mp, _lvl, _defense, _critChance)
 {
-	this->Exp = _exp;
+	this->Exp += _exp;
 	this->Gold = _gold;
+	this->CheckCondition();
 }
 
 void Human::PrintCharacterProps() 
@@ -42,6 +43,7 @@ void Human::PrintCharacterProps()
 		"MP: " << this->MP << '/' << this->MaxMP << '\n' <<
 		"Attack: " << this->Attack << " + (" << this->EqAddAttack << ")" << '\n' <<
 		"Defense: " << this->Defense << '\n' <<
+		"Crit chance: " << this->CritChance << '%' << '\n' <<
 		"Lvl: " << this->Lvl << '\n' <<
 		"Exp: " << this->Exp << '/' << this->LvlExpBound << '\n' <<
 		"Gold: " << this->Gold << '\n' << '\n';
@@ -67,6 +69,11 @@ void Human::GotExp(int _givenExpPoints)
 	this->Exp += _givenExpPoints;
 }
 
+void Human::GotGold(int _givenGold)
+{
+	this->Gold += _givenGold;
+}
+
 void Human::LevelUp()
 {
 	std::cout << "Level UP!" << " " << this->Lvl << "->" << (this->Lvl) + 1 << '\n';
@@ -85,11 +92,16 @@ void Human::LevelUp()
 	this->LvlExpBound = this->LevelingExpScheme.at(this->Lvl);
 }
 
+int Human::GetLevel()
+{
+	return this->Lvl;
+}
+
 void Human::Equip(IItem* itemToEquip)
 {
 	std::string EqType = typeid(*itemToEquip).name();	
 	if (EqType == "class IWeapon")
-		this->EqAddAttack += static_cast<IWeapon*>(itemToEquip)->GetAttack();
+		this->EqAddAttack = static_cast<IWeapon*>(itemToEquip)->GetAttack(); //operator should be +=, later write method uneqip which should decrease EqAddAttack value
 	
 	this->HandsEq[0] = itemToEquip;
 }

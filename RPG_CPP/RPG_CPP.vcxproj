@@ -146,6 +146,7 @@
     <ClCompile Include="IWeapon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="IItem.h" />
     <ClInclude Include="IWeapon.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MyRandom.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

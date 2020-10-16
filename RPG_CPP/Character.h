@@ -19,7 +19,7 @@ protected: bool IsDead;
 public: Character(std::string _name, int _hp, int _lvl, int _attack, double _defense, double _critChance);
 
 public: virtual void PrintCharacterProps() = 0;
-public: void AttackSomeone(Character& enemy);
+public: void AttackSomeone(Character& enemy); //probably will not be used anymore
 public: void AttackSomeone(Character& enemy, int damage);
 
 public: virtual void CheckCondition();
@@ -29,6 +29,8 @@ public: std::string GetName();
 public: void Heal(int heal_value);
 public: int GetMaxHP();
 public: virtual double GetWholeAttackValue();
+public: virtual double GetWholeCritChance();
 protected: bool CheckIfCritical(); //should be in another class
+public: double GetCritChance();
 };
 

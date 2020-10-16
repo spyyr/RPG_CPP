@@ -1,33 +1,40 @@
 #include "Game.h"
 
+std::vector<Monster*> Game::monsterVector = {  };
+
 Game::Game()
 {
 	this->playerPtr = new Player("Janek", 55, 20, 2, 3, 20.0, 30, 150);
 	Weapon* MyWeapon = new Weapon("Bloodthirster", 35, 4, 0.5);
 	playerPtr->Equip(MyWeapon);
-	playerPtr->GetHandsEquipment(0)->PrintItemProps();
+	playerPtr->GetHandsEquipment(0)->PrintItemProps();	
+	
+	Game::monsterVector.push_back(new Monster("Mouse", 20, 1, 2, 1.0, 1.0, 5));
+	Game::monsterVector.push_back(new Monster("Dog", 30, 2, 4, 2.0, 3.0, 10));
+	Game::monsterVector.push_back(new Monster("Wolf", 40, 3, 7, 3.0, 5.0, 15));
+
 	delete MyWeapon;
 }
 
 Game::~Game()
 {
 	//delete MyWeapon;
+	for (Monster* item : monsterVector)
+	{
+		delete item;
+	}
 	delete playerPtr;
 }
 
 void Game::FightArena(Player& playerRef)
 {
 	int afterFightHealValue = 0;
-	std::array<Monster*, 3> monsterArray{
-		new Monster("Mouse", 20, 1, 2, 1.0, 1.0, 5),
-		new Monster("Dog", 30, 2, 4, 2.0, 3.0, 10),
-		new Monster("Wolf", 40, 3, 7, 3.0, 5.0, 15) };
 
 	Weapon* LvlWeapon = new Weapon("Mighty Sword", 55, 7, 1.0);
 
 	bool sw = false;
-	Monster* monsterPtr = new Monster(*monsterArray[0]);
-	for (Monster* item : monsterArray)
+	Monster* monsterPtr = new Monster(*monsterVector[0]);
+	for (Monster* item : monsterVector)
 	{
 		for (int i = 0; i < 5; i++)
 		{
@@ -45,12 +52,20 @@ void Game::FightArena(Player& playerRef)
 			playerRef.PrintCharacterProps();
 		}
 	}
-	for (Monster* item : monsterArray)
-	{
-		delete item;
-	}
+
 	delete monsterPtr;
 	delete LvlWeapon;
+}
+
+double Game::CalculateDamage(Character& characterRef)
+{
+	if (Game::CheckIfCritical(&characterRef))
+	{
+		ScreenPrint::Print("Critical hit! Damage x2", 4, 1, 0, 1);
+		return characterRef.GetWholeAttackValue() * 2;
+	}
+	else
+		return characterRef.GetWholeAttackValue();
 }
 
 void Game::Fight(Player& player, Monster& enemy)
@@ -62,7 +77,7 @@ void Game::Fight(Player& player, Monster& enemy)
 	{
 		ScreenPrint::Print("Fight " + player.GetName() + " vs " + enemy.GetName(), 3, 1, 1, 1);
 		SetConsoleTextAttribute(hConsole, 2);
-		player.AttackSomeone(enemy, player.GetEqAddAttack());
+		player.AttackSomeone(enemy, this->CalculateDamage(player));
 		if (enemy.getIsDead())
 		{
 			system("Pause");
@@ -74,7 +89,7 @@ void Game::Fight(Player& player, Monster& enemy)
 			enemy.PrintCharacterProps();
 		}
 		SetConsoleTextAttribute(hConsole, 4);
-		enemy.AttackSomeone(player);
+		enemy.AttackSomeone(player, this->CalculateDamage(enemy));
 
 		if (player.getIsDead())
 		{
@@ -97,6 +112,25 @@ void Game::Fight(Player& player, Monster& enemy)
 		player.GotGold(enemy.GetGoldYield());
 		player.CheckCondition();
 	}
+}
+
+bool Game::CheckIfCritical(Character* ptrCharacterToCheck)
+{
+	int randomNumber = MyRandom::GenerateRandomNumber(0, 100);
+	std::string CharacterClass = typeid(*ptrCharacterToCheck).name();
+	double characterCritChance = ptrCharacterToCheck->GetCritChance();
+
+	if (CharacterClass == "class Player" || CharacterClass == "class Human")
+	{
+		characterCritChance += static_cast<Human*>(ptrCharacterToCheck)->GetEqAddCritChance();
+	}
+	if (characterCritChance <= 0)
+		return false;
+
+	if (characterCritChance >= randomNumber)
+		return true;
+	else
+		return false;
 }
 
 

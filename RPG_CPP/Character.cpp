@@ -19,26 +19,14 @@ Character::Character(std::string _name, int _hp, int _lvl, int _attack, double _
 
 void Character::AttackSomeone(Character& enemy) //attack should be done in another method, best in class game
 {		
-	/*int attackValue;
-	attackValue = this->Attack;
-	std::cout << this->Name << " attacks " << enemy.GetName() << " for " << attackValue << '\n';
-	std::cout << "Damage Dealt to " << enemy.Name << ": " << this->Attack * (100 - enemy.Defense) * 0.01 << '\n';
-	enemy.HP -= attackValue * (100-enemy.Defense)*0.01;
-	enemy.CheckCondition();*/
 	Character::AttackSomeone(enemy, 0);
 }
 
-void Character::AttackSomeone(Character& enemy, int damage)
-{
-	int attackValue = this->Attack + damage;	
-	if (this->CheckIfCritical())
-	{
-		attackValue *= 2;
-		std::cout << "Critical attack! Damage x2" << '\n';
-	}
-	std::cout << this->Name << " attacks " << enemy.GetName() << " for " << attackValue << '\n';
-	std::cout << "Damage Dealt to " << enemy.Name << ": " << attackValue * (100 - enemy.Defense) * 0.01 << '\n';
-	enemy.HP -= attackValue * (100 - enemy.Defense) * 0.01;
+void Character::AttackSomeone(Character& enemy, int damage) //every calculation from this method should be moved to methods in game class
+{	
+	std::cout << this->Name << " attacks " << enemy.GetName() << " for " << damage << '\n';
+	std::cout << "Damage Dealt to " << enemy.Name << ": " << damage * (100 - enemy.Defense) * 0.01 << '\n';
+	enemy.HP -= damage * (100 - enemy.Defense) * 0.01;
 	enemy.CheckCondition();
 }
 
@@ -61,6 +49,16 @@ void Character::Heal(int heal_value)
 }
 int Character::GetMaxHP() { return this->MaxHP; }
 
+double Character::GetWholeAttackValue()
+{
+	return this->Attack;
+}
+
+double Character::GetWholeCritChance()
+{
+	return this->CritChance;
+}
+
 bool Character::CheckIfCritical()
 {
 	int tmp = MyRandom::GenerateRandomNumber(0, 100);
@@ -70,12 +68,8 @@ bool Character::CheckIfCritical()
 		return false;
 }
 
-double Character::GetWholeAttackValue()
+double Character::GetCritChance()
 {
-	int returnAttackValue = this->Attack;
-	if (this->CheckIfCritical())
-		returnAttackValue *= 2;
-
-	return returnAttackValue;
+	return this->CritChance;
 }
-	  
+  

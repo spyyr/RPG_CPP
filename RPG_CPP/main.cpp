@@ -7,9 +7,6 @@ int main()
 	gamu->playerPtr->PrintCharacterProps();
 	gamu->FightArena(*(gamu->playerPtr));
 	delete gamu;
-	//playerPtr->GetHandsEquipment(0)->PrintItemProps();
-
-	//FightArena(*playerPtr);	
 
 	//SetConsoleCursorPosition(ScreenPrint::GethConsole(), { 15,15 });	
 

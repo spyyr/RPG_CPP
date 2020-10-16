@@ -43,7 +43,7 @@ void Human::PrintCharacterProps()
 		"MP: " << this->MP << '/' << this->MaxMP << '\n' <<
 		"Attack: " << this->Attack << " + (" << this->EqAddAttack << ")" << '\n' <<
 		"Defense: " << this->Defense << '\n' <<
-		"Crit chance: " << this->CritChance << '%' << '+' << this->EqAddCritChance << '%' << '\n' <<
+		"Crit chance: " << this->CritChance << '%' << " + " << this->EqAddCritChance << '%' << '\n' <<
 		"Lvl: " << this->Lvl << '\n' <<
 		"Exp: " << this->Exp << '/' << this->LvlExpBound << '\n' <<
 		"Gold: " << this->Gold << '\n' << '\n';
@@ -124,17 +124,22 @@ IItem* Human::GetHandsEquipment(short index)
 	}
 }
 
-int Human::GetEqAddAttack()
+double Human::GetEqAddAttack()
 {
 	return this->EqAddAttack;
 }
 
-int Human::GetEqAddCritChance()
+double Human::GetEqAddCritChance()
 {
 	return this->EqAddCritChance;
 }
 
 double Human::GetWholeAttackValue()
 {
-	return 0;
+	return Character::GetWholeAttackValue() + this->EqAddAttack;
+}
+
+double Human::GetWholeCritChance()
+{
+	return Character::GetWholeCritChance() + this->EqAddCritChance;
 }

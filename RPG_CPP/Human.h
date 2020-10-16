@@ -27,8 +27,9 @@ public: int GetLevel();
 public: void Equip(IItem* itemToEquip);
 protected: int CalculateEqAttack();
 public: IItem* GetHandsEquipment(short index);
-public: int GetEqAddAttack();
-public: int GetEqAddCritChance();
+public: double GetEqAddAttack();
+public: double GetEqAddCritChance();
 public: double GetWholeAttackValue() override;
+public: double GetWholeCritChance() override;
 };
 

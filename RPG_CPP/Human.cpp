@@ -25,6 +25,7 @@ Human::Human(std::string _name, int _hp, int _mp, int _lvl, double _defense, dou
 		}		
 	}
 	this->EqAddAttack = 0;
+	this->EqAddDefense = 0;
 	this->Gold = 0;
 	this->Exp = 0;
 }
@@ -42,7 +43,7 @@ void Human::PrintCharacterProps()
 		"HP: " << this->HP << '/' << this->MaxHP << '\n' <<
 		"MP: " << this->MP << '/' << this->MaxMP << '\n' <<
 		"Attack: " << this->Attack << " + (" << this->EqAddAttack << ")" << '\n' <<
-		"Defense: " << this->Defense << '\n' <<
+		"Defense: " << this->Defense << " + (" << this->EqAddDefense << ")" << '\n' <<
 		"Crit chance: " << this->CritChance << '%' << " + " << this->EqAddCritChance << '%' << '\n' <<
 		"Lvl: " << this->Lvl << '\n' <<
 		"Exp: " << this->Exp << '/' << this->LvlExpBound << '\n' <<
@@ -76,7 +77,9 @@ void Human::GotGold(int _givenGold)
 
 void Human::LevelUp()
 {
-	std::cout << "Level UP!" << " " << this->Lvl << "->" << (this->Lvl) + 1 << '\n';
+	ScreenPrint::Print("Level UP! " + std::to_string(this->Lvl) + "->" + std::to_string((this->Lvl) + 1), 14, 1, 0, 1);
+	system("PAUSE");
+	//std::cout << "Level UP!" << " " << this->Lvl << "->" << (this->Lvl) + 1 << '\n';
 	this->Lvl++;
 	this->Attack += 2;
 	this->Heal(10);
@@ -104,9 +107,18 @@ void Human::Equip(IItem* itemToEquip)
 	{
 		this->EqAddAttack = static_cast<Weapon*>(itemToEquip)->GetAttack(); //operator should be +=, later write method uneqip which should decrease EqAddAttack value
 		this->EqAddCritChance = static_cast<Weapon*>(itemToEquip)->GetAdditionalCritChance();
+		Weapon* weaponPtr = static_cast<Weapon*>(itemToEquip);
+		this->HandsEq[0] = new Weapon(*weaponPtr);
 	}
-	Weapon* weaponPtr = static_cast<Weapon*>(itemToEquip);
-	this->HandsEq[0] = new Weapon(*weaponPtr);
+
+	if (EqType == "class Armor") //those if's should be switches, equip action for weapon or armor should be distinct protected methods
+	{
+		this->ArmorChest = static_cast<Armor*>(itemToEquip);
+		this->EqAddDefense = static_cast<Armor*>(itemToEquip)->GetArmorValue();
+	}
+	ScreenPrint::Print(itemToEquip->GetItemName() + " equipped!", 14, true, false, true);
+
+
 }
 
 int Human::CalculateEqAttack()
@@ -142,4 +154,52 @@ double Human::GetWholeAttackValue()
 double Human::GetWholeCritChance()
 {
 	return Character::GetWholeCritChance() + this->EqAddCritChance;
+}
+
+double Human::GetEqAddDefense()
+{
+	return this->EqAddDefense;
+}
+
+Armor* Human::GetArmorChest()
+{
+	return static_cast<Armor*>(this->ArmorChest);
+}
+
+bool Human::AddToBackpack(IItem* item)
+{
+	if (this->Backpack.size() < this->MaxBackpackItems)
+	{
+		//auto tmp = *item;
+		//auto it = item->clone();
+		/*IItem& x = *item;
+		std::unique_ptr<IItem> y = x.clone();*/
+		auto ptr = item->cpy();
+		this->Backpack.push_back(ptr); //item should be copied, maybe using overriden "clone" method. Now only pointer to item is stored. 
+		return true;
+	}
+	else
+	{
+		ScreenPrint::Print("You cannot add anymore items to backpack. Please sell or drop some items", 4, 1, 0, 1);
+		return false;
+	}
+}
+
+bool Human::RemoveFromBackpack(int index)
+{
+	delete this->Backpack.at(index);
+	this->Backpack.erase(this->Backpack.begin()+index, this->Backpack.begin()+index+1);
+
+	return true;
+}
+
+void Human::PrintBackpack()
+{
+	ScreenPrint::Print("Items in backpack: " + std::to_string(this->Backpack.size()) + '/' + std::to_string(this->MaxBackpackItems), 13, 1, 0, 1);
+	//ScreenPrint::Print(std::string("Left","Right"), 12, 11, 1, 1);
+	for(auto item: this->Backpack)
+	{
+		item->PrintItemProps();
+		std::cout << typeid(*item).name() << '\n';
+	}
 }

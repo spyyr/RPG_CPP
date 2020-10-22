@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include "ScreenPrint.h"
 class Character
 {
 protected: std::string Name;
@@ -32,5 +33,6 @@ public: virtual double GetWholeAttackValue();
 public: virtual double GetWholeCritChance();
 protected: bool CheckIfCritical(); //should be in another class
 public: double GetCritChance();
+public: void SetName(std::string newName);
 };
 

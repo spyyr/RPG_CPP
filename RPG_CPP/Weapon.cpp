@@ -10,7 +10,8 @@ void Weapon::PrintItemProps()
 {
 	std::cout << "Weapon name: " << this->Name << '\n' <<
 		"Item price: " << this->Price << '\n' <<
-		"Attack: " << this->Attack << '\n' << '\n';
+		"Attack: " << this->Attack << '\n' <<
+		"Additional crit chance: " <<  this->AdditionalCritChance << '\n' << '\n';
 }
 
 double Weapon::GetAttack()
@@ -21,4 +22,14 @@ double Weapon::GetAttack()
 double Weapon::GetAdditionalCritChance()
 {
 	return this->AdditionalCritChance;
+}
+
+std::unique_ptr<IItem> Weapon::clone() const
+{
+	return std::make_unique<Weapon>(*this);
+}
+
+Weapon* Weapon::cpy()
+{
+	return new Weapon(*this);
 }

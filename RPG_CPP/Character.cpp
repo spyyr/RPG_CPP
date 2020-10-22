@@ -72,4 +72,9 @@ double Character::GetCritChance()
 {
 	return this->CritChance;
 }
+
+void Character::SetName(std::string newName)
+{
+	this->Name = newName;
+}
   

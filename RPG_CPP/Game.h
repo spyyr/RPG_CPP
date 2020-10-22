@@ -10,7 +10,8 @@
 class Game
 {
 public: Player* playerPtr;
-public: static std::vector<Monster*> monsterVector;		
+private: static std::vector<Monster*> monsterVector;		
+private: static std::vector<Weapon*> weaponVector;
 
 public: Game();
 public: ~Game();

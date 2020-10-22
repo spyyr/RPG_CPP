@@ -24,7 +24,7 @@ void ScreenPrint::Print(std::string messageToPrint, short colorNumber, short new
 	
 	if (colorChangeOnce)
 		ScreenPrint::ChangeTextColor(ScreenPrint::PreviousColor);
-}
+ }
 
 void ScreenPrint::ClearScreen()
 {

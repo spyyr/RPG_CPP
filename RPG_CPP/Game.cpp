@@ -1,29 +1,31 @@
 #include "Game.h"
 
-std::vector<Monster*> Game::monsterVector = {  };
+std::vector<Monster*> Game::monsterVector = {};
+std::vector<Weapon*> Game::weaponVector = {};
 
 Game::Game()
 {
 	this->playerPtr = new Player("Janek", 55, 20, 2, 3, 20.0, 30, 150);
-	Weapon* MyWeapon = new Weapon("Bloodthirster", 35, 4, 0.5);
-	playerPtr->Equip(MyWeapon);
-	playerPtr->GetHandsEquipment(0)->PrintItemProps();	
+	//Weapon* MyWeapon = new Weapon("Bloodthirster", 35, 4, 0.5);
+	Armor* MyArmor = new Armor("Steel plate", 55, 2.0);
 	
-	Game::monsterVector.push_back(new Monster("Mouse", 20, 1, 2, 1.0, 1.0, 5));
-	Game::monsterVector.push_back(new Monster("Dog", 30, 2, 4, 2.0, 3.0, 10));
-	Game::monsterVector.push_back(new Monster("Wolf", 40, 3, 7, 3.0, 5.0, 15));
+	
+	playerPtr->Equip(MyArmor);
+	
+	Game::monsterVector = {
+		new Monster("Mouse", 20, 1, 2, 1.0, 1.0, 5),
+		new Monster("Dog", 30, 2, 4, 2.0, 3.0, 10),
+		new Monster("Wolf", 40, 3, 7, 3.0, 5.0, 15),
+		new Monster("Bear", 55, 4, 9, 4.5, 6.5, 25) };
 
-	delete MyWeapon;
-}
-
-Game::~Game()
-{
+	Game::weaponVector = {
+		new Weapon("Bloodthirster", 35, 4, 0.5),
+		new Weapon("Mighty Sword", 55, 7, 1.0)
+	};
+	playerPtr->Equip(this->weaponVector.at(0));
+	playerPtr->GetHandsEquipment(0)->PrintItemProps();
 	//delete MyWeapon;
-	for (Monster* item : monsterVector)
-	{
-		delete item;
-	}
-	delete playerPtr;
+	delete MyArmor;
 }
 
 void Game::FightArena(Player& playerRef)
@@ -39,6 +41,7 @@ void Game::FightArena(Player& playerRef)
 		for (int i = 0; i < 5; i++)
 		{
 			monsterPtr = new Monster(*item);
+			monsterPtr->SetName(monsterPtr->GetName() + " #" + std::to_string(i+1));
 			this->Fight(playerRef, *monsterPtr);
 			if (playerRef.getIsDead() == true)
 				return;
@@ -48,6 +51,7 @@ void Game::FightArena(Player& playerRef)
 			if (playerRef.GetLevel() == 3 && sw == false)
 			{
 				playerRef.Equip(LvlWeapon);
+				sw = !sw;
 			}
 			playerRef.PrintCharacterProps();
 		}
@@ -68,7 +72,7 @@ double Game::CalculateDamage(Character& characterRef)
 		return characterRef.GetWholeAttackValue();
 }
 
-void Game::Fight(Player& player, Monster& enemy)
+void Game::Fight(Player& player, Monster& enemy) //change this method: refactor and allow to fight instances of Human Class
 {
 	HANDLE hConsole = ScreenPrint::GethConsole();
 	Sleep(500);
@@ -133,4 +137,17 @@ bool Game::CheckIfCritical(Character* ptrCharacterToCheck)
 		return false;
 }
 
+Game::~Game()
+{
+	for (Monster* item : monsterVector)
+	{
+		delete item;
+	}
+	
+	for (Weapon* item : weaponVector)
+	{
+		delete item;
+	}
 
+	delete playerPtr;
+}

@@ -10,5 +10,7 @@ public: Weapon(std::string itemName, int itemPrice, double AttackValue, double _
 public: void PrintItemProps() override;
 public: double GetAttack();
 public: double GetAdditionalCritChance();
+public: std::unique_ptr<IItem> clone() const override;
+public: Weapon* cpy() override;
 };
 

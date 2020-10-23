@@ -31,6 +31,7 @@ public: void Heal(int heal_value);
 public: int GetMaxHP();
 public: virtual double GetWholeAttackValue();
 public: virtual double GetWholeCritChance();
+public: virtual double GetWholeDefenseValue();
 protected: bool CheckIfCritical(); //should be in another class
 public: double GetCritChance();
 public: void SetName(std::string newName);

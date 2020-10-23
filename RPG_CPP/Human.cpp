@@ -160,6 +160,11 @@ double Human::GetEqAddDefense()
 	return this->EqAddDefense;
 }
 
+double Human::GetWholeDefenseValue()
+{
+	return Character::GetWholeDefenseValue() + this->EqAddDefense;
+}
+
 Armor* Human::GetArmorChest()
 {
 	return static_cast<Armor*>(this->ArmorChest);
@@ -202,4 +207,10 @@ void Human::PrintBackpack()
 		item->PrintItemProps();
 		std::cout << typeid(*item).name() << '\n';
 	}
+}
+
+bool Human::UsePotion(IPotion* Potion)
+{
+	Potion->PotionAction(*this);
+	return true;
 }

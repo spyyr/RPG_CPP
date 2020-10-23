@@ -25,8 +25,8 @@ void Character::AttackSomeone(Character& enemy) //attack should be done in anoth
 void Character::AttackSomeone(Character& enemy, int damage) //every calculation from this method should be moved to methods in game class
 {	
 	std::cout << this->Name << " attacks " << enemy.GetName() << " for " << damage << '\n';
-	std::cout << "Damage Dealt to " << enemy.Name << ": " << damage * (100 - enemy.Defense) * 0.01 << '\n';
-	enemy.HP -= damage * (100 - enemy.Defense) * 0.01;
+	std::cout << "Damage Dealt to " << enemy.Name << ": " << damage * (100 - enemy.GetWholeDefenseValue()) * 0.01 << '\n';
+	enemy.HP -= damage * (100 - enemy.GetWholeDefenseValue()) * 0.01;
 	enemy.CheckCondition();
 }
 
@@ -57,6 +57,11 @@ double Character::GetWholeAttackValue()
 double Character::GetWholeCritChance()
 {
 	return this->CritChance;
+}
+
+double Character::GetWholeDefenseValue()
+{
+	return this->Defense;
 }
 
 bool Character::CheckIfCritical()

@@ -5,7 +5,7 @@ std::vector<Weapon*> Game::weaponVector = {};
 
 Game::Game()
 {
-	this->playerPtr = new Player("Janek", 1, 20, 2, 3, 20.0, 30, 150);
+	this->playerPtr = new Player("Janek", 40, 20, 2, 3, 20.0, 30, 150);
 	Armor* MyArmor = new Armor("Steel plate", 55, 2.0);
 	
 	
@@ -30,7 +30,8 @@ void Game::FightArena(Player& playerRef)
 {
 	int afterFightHealValue = 0;
 
-	Weapon* LvlWeapon = new Weapon("Mighty Sword", 55, 7, 1.0);
+	//Weapon* LvlWeapon = new Weapon("Mighty Sword", 55, 7, 1.0);
+	Armor* LvlArmor = new Armor("Mighty Chestplate", 75, 5);
 
 	bool sw = false;
 	Monster* monsterPtr = new Monster(*monsterVector[0]);
@@ -49,15 +50,15 @@ void Game::FightArena(Player& playerRef)
 			if (playerRef.GetLevel() == 3 && sw == false)
 			{
 				playerRef.Equip(this->weaponVector.at(1));
+				playerRef.Equip(LvlArmor);
 				system("PAUSE");
 				sw = !sw;
 			}
 			playerRef.PrintCharacterProps();
 		}
 	}
-
+	delete LvlArmor;
 	delete monsterPtr;
-	delete LvlWeapon;
 }
 
 double Game::CalculateDamage(Character& characterRef)
@@ -121,12 +122,8 @@ bool Game::CheckIfCritical(Character* ptrCharacterToCheck)
 {
 	int randomNumber = MyRandom::GenerateRandomNumber(0, 100);
 	std::string CharacterClass = typeid(*ptrCharacterToCheck).name();
-	double characterCritChance = ptrCharacterToCheck->GetCritChance();
+	double characterCritChance = ptrCharacterToCheck->GetWholeCritChance();
 
-	if (CharacterClass == "class Player" || CharacterClass == "class Human")
-	{
-		characterCritChance += static_cast<Human*>(ptrCharacterToCheck)->GetEqAddCritChance();
-	}
 	if (characterCritChance <= 0)
 		return false;
 

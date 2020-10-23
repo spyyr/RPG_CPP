@@ -17,7 +17,7 @@ int main()
 	gamu->playerPtr->AddToBackpack(wpn2);
 	gamu->playerPtr->AddToBackpack(arm);
 	gamu->playerPtr->PrintCharacterProps();
-	hpptn->PotionAction(*gamu->playerPtr);
+	gamu->playerPtr->UsePotion(hpptn);
 	gamu->playerPtr->PrintCharacterProps();
 	//gamu->playerPtr->PrintBackpack();
 	delete mnstr;
@@ -26,7 +26,7 @@ int main()
 
 	//gamu->playerPtr->PrintBackpack();
 	
-	//gamu->FightArena(*(gamu->playerPtr));
+	gamu->FightArena(*(gamu->playerPtr));
 
 	delete gamu;
 

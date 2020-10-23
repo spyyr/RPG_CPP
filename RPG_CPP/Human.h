@@ -4,6 +4,7 @@
 #include <array>
 #include "Weapon.h"
 #include "Armor.h"
+#include "Potions/HealthPotion.h"
 class Human : public Character
 {
 protected: int MP;
@@ -37,9 +38,11 @@ public: double GetEqAddCritChance();
 public: double GetWholeAttackValue() override;
 public: double GetWholeCritChance() override;
 public: double GetEqAddDefense();
+public: double GetWholeDefenseValue() override;
 public: Armor* GetArmorChest();
 public: bool AddToBackpack(IItem* item);
 public: bool RemoveFromBackpack(int index);
 public: void PrintBackpack();
+public: bool UsePotion(IPotion* Potion);
 };
 

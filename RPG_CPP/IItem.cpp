@@ -6,6 +6,13 @@ IItem::IItem(std::string _name, int _price)
 	this->Price = _price;
 }
 
+void IItem::PrintBasicItemProps()
+{
+	std::cout << typeid(*this).name() << "\nItem name: " << this->Name << '\n' <<
+		"Price: " << this->Price << '\n';
+	system("Pause");
+}
+
 std::string IItem::GetItemName()
 {
 	return this->Name;
@@ -14,4 +21,9 @@ std::string IItem::GetItemName()
 void IItem::SetName(std::string name)
 {
 	this->Name = name;
+}
+
+bool IItem::GetIsStackable()
+{
+	return this->IsStackable;
 }

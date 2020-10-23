@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Potions">
+      <UniqueIdentifier>{b00d19fe-a599-456a-bbdc-adfe1a3b38e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Potions">
+      <UniqueIdentifier>{278f99b5-c306-404a-a266-44a3c7d1f7e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,6 +54,12 @@
     <ClCompile Include="Armor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Potions\IPotion.cpp">
+      <Filter>Source Files\Potions</Filter>
+    </ClCompile>
+    <ClCompile Include="Potions\HealthPotion.cpp">
+      <Filter>Source Files\Potions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Human.h">
@@ -79,6 +91,12 @@
     </ClInclude>
     <ClInclude Include="Armor.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Potions\IPotion.h">
+      <Filter>Header Files\Potions</Filter>
+    </ClInclude>
+    <ClInclude Include="Potions\HealthPotion.h">
+      <Filter>Header Files\Potions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

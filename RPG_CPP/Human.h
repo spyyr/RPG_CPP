@@ -24,7 +24,7 @@ public: Human(std::string _name, int _hp, int _mp, int _lvl, double _defense, do
 public: Human(std::string _name, int _hp, int _mp, int _lvl, double _defense, double _critChance, int _exp, int _gold);
 public: void PrintCharacterProps() override;
 public: void CheckCondition() override;
-public: void Dead() override;
+public: void Dead() override; //this method should be generic for human dying, not only for player's character
 public: void GotExp(int _givenExpPoints);
 public: void GotGold(int _givenGold);
 public: void LevelUp();

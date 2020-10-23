@@ -5,8 +5,7 @@ std::vector<Weapon*> Game::weaponVector = {};
 
 Game::Game()
 {
-	this->playerPtr = new Player("Janek", 55, 20, 2, 3, 20.0, 30, 150);
-	//Weapon* MyWeapon = new Weapon("Bloodthirster", 35, 4, 0.5);
+	this->playerPtr = new Player("Janek", 1, 20, 2, 3, 20.0, 30, 150);
 	Armor* MyArmor = new Armor("Steel plate", 55, 2.0);
 	
 	
@@ -24,7 +23,6 @@ Game::Game()
 	};
 	playerPtr->Equip(this->weaponVector.at(0));
 	playerPtr->GetHandsEquipment(0)->PrintItemProps();
-	//delete MyWeapon;
 	delete MyArmor;
 }
 
@@ -50,7 +48,8 @@ void Game::FightArena(Player& playerRef)
 			playerRef.Heal(afterFightHealValue);
 			if (playerRef.GetLevel() == 3 && sw == false)
 			{
-				playerRef.Equip(LvlWeapon);
+				playerRef.Equip(this->weaponVector.at(1));
+				system("PAUSE");
 				sw = !sw;
 			}
 			playerRef.PrintCharacterProps();
@@ -135,6 +134,11 @@ bool Game::CheckIfCritical(Character* ptrCharacterToCheck)
 		return true;
 	else
 		return false;
+}
+
+Monster* Game::GetMonsterFromVector(int index)
+{
+	return new Monster(*monsterVector.at(index));
 }
 
 Game::~Game()

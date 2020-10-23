@@ -4,6 +4,7 @@ Weapon::Weapon(std::string itemName, int itemPrice, double AttackValue, double _
 {
 	this->Attack = AttackValue;
 	this->AdditionalCritChance = _additionalCritChance;
+	this->IsStackable = false;
 }
 
 void Weapon::PrintItemProps()

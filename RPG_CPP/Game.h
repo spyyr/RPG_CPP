@@ -20,5 +20,6 @@ public: void Fight(Player& player, Monster& enemy);
 public: void FightArena(Player& playerRef);
 private: double CalculateDamage(Character& characterRef);
 public: bool CheckIfCritical(Character* characterToCheck);
+public: static Monster* GetMonsterFromVector(int index);
 };
 

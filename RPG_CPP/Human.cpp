@@ -59,10 +59,10 @@ void Human::CheckCondition()
 
 void Human::Dead() 
 {
-	system("cls");	
+	/*system("cls");	
 	std::cout << this->Name << " died!" << '\n'
 		<< "This is the end of your story... \n";
-	this->IsDead = true;
+	this->IsDead = true;*/
 }
 
 void Human::GotExp(int _givenExpPoints)
@@ -79,11 +79,10 @@ void Human::LevelUp()
 {
 	ScreenPrint::Print("Level UP! " + std::to_string(this->Lvl) + "->" + std::to_string((this->Lvl) + 1), 14, 1, 0, 1);
 	system("PAUSE");
-	//std::cout << "Level UP!" << " " << this->Lvl << "->" << (this->Lvl) + 1 << '\n';
 	this->Lvl++;
-	this->Attack += 2;
-	this->Heal(10);
+	this->Attack += 2;	
 	this->MaxHP += 10; //change healing and hp maxing to distinct methods, same with MP 
+	this->Heal(10);
 	this->MP += 5;
 	this->MaxMP += 5;
 	
@@ -103,7 +102,7 @@ int Human::GetLevel()
 void Human::Equip(IItem* itemToEquip)
 {
 	std::string EqType = typeid(*itemToEquip).name();	
-	if (EqType == "class Weapon")
+	if (typeid(*itemToEquip) == typeid(Weapon))//(EqType == "class Weapon")
 	{
 		this->EqAddAttack = static_cast<Weapon*>(itemToEquip)->GetAttack(); //operator should be +=, later write method uneqip which should decrease EqAddAttack value
 		this->EqAddCritChance = static_cast<Weapon*>(itemToEquip)->GetAdditionalCritChance();
@@ -174,8 +173,9 @@ bool Human::AddToBackpack(IItem* item)
 		//auto it = item->clone();
 		/*IItem& x = *item;
 		std::unique_ptr<IItem> y = x.clone();*/
-		auto ptr = item->cpy();
-		this->Backpack.push_back(ptr); //item should be copied, maybe using overriden "clone" method. Now only pointer to item is stored. 
+		auto ptr = item->clone();
+		this->Backpack.push_back(ptr.get()); //item should be copied, maybe using overriden "clone" method. Now only pointer to item is stored. 
+		ptr.release();
 		return true;
 	}
 	else

@@ -14,7 +14,7 @@ protected: double Attack;
 protected: double Defense;
 protected: double MaxDef = 20.0;
 protected: double CritChance;
-protected: double MaxCritChance = 80.0; //later to change 30-40% max
+protected: double MaxCritChance = 80.0; //later change to 30-40% max
 protected: bool IsDead;
 
 public: Character(std::string _name, int _hp, int _lvl, int _attack, double _defense, double _critChance);

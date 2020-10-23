@@ -142,8 +142,10 @@
     <ClCompile Include="Armor.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Potions\HealthPotion.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="IItem.cpp" />
+    <ClCompile Include="Potions\IPotion.cpp" />
     <ClCompile Include="ScreenPrint.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="main.cpp" />
@@ -155,8 +157,10 @@
     <ClInclude Include="Armor.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Potions\HealthPotion.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="IItem.h" />
+    <ClInclude Include="Potions\IPotion.h" />
     <ClInclude Include="ScreenPrint.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Monster.h" />

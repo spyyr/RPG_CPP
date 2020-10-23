@@ -3,6 +3,7 @@
 Armor::Armor(std::string _name, int _price, double ArmorValue):IItem(_name, _price)
 {
 	this->ArmorValue = ArmorValue;
+	this->IsStackable = false;
 }
 
 void Armor::PrintItemProps()
